@@ -64,6 +64,10 @@ flowchart LR
 
 SAHI 推理路径在代码中实现，目前要求兼容 YOLOv5 的 640×640 FP32 engine；GUI 中的 SAHI 模式入口处于隐藏状态。更多组件映射和实现细节见[架构说明](docs/architecture.md)。
 
+### 项目方案材料
+
+精选的项目背景、方案说明、系统框架和多路并发页：[架构与方案精选页 PDF](docs/portfolio/project-architecture-highlights.pdf)（原 PDF 第 2、3、5、8 页）。其中性能数字按原材料中的目标/测试条件理解，不作为通用性能承诺。
+
 ## 构建
 
 依赖：CMake 3.18+、C++17 编译器、CUDA Toolkit、TensorRT 10、NVIDIA 驱动/NVDEC、OpenCV、FFmpeg 开发库、GLFW、OpenGL 和 pkg-config。若系统安装 libuvc 开发库，CMake 会启用可选 UVC 输入。

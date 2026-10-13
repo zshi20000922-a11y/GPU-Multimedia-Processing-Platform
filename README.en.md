@@ -64,6 +64,10 @@ flowchart LR
 
 The SAHI inference path is implemented in code and currently requires a YOLOv5-compatible 640×640 FP32 engine; its GUI mode selector is hidden. See the [architecture guide](docs/architecture.md) for the component map and implementation details.
 
+### Project Design Slides
+
+Selected project background, solution, system architecture, and multi-channel processing slides: [architecture highlights PDF](docs/portfolio/project-architecture-highlights.pdf) (original pages 2, 3, 5, and 8). Treat performance figures as goals or results under the conditions stated in the source material, not as general guarantees.
+
 ## Build
 
 Requirements: CMake 3.18+, a C++17 compiler, CUDA Toolkit, TensorRT 10, NVIDIA driver/NVDEC, OpenCV, FFmpeg development libraries, GLFW, OpenGL, and pkg-config. CMake enables optional UVC input when the system libuvc development package is installed.
