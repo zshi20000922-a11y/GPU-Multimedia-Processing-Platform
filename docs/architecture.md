@@ -30,22 +30,23 @@ flowchart LR
 ## Per-channel data flow / 单路处理流程
 
 ```mermaid
-flowchart TB
-    INPUT[Camera frame or decoded NV12 frame] --> SLOT[Acquire ring-buffer slot]
-    SLOT --> DECODE[Decode or transfer]
-    DECODE --> PRE[CUDA preprocess: color conversion, resize, letterbox, normalize]
-    PRE -->|DIRECT| INFER[TensorRT inference]
-    PRE -->|SAHI| TILES[Generate image tiles]
-    TILES --> BATCH[Batch/iterate TensorRT inference]
-    INFER --> COPY[Copy outputs for CPU postprocess]
+flowchart LR
+    INPUT[Selected camera or video input] --> INGEST[Capture/decode and fill frame slot]
+    INGEST --> SLOT[4-slot ring buffer]
+    SLOT --> PRE[DIRECT: full-frame CUDA preprocessing]
+    PRE --> INFER[TensorRT inference]
+    SLOT --> TILES[SAHI: generate tile coordinates]
+    TILES --> TILE_PRE[CUDA tile preprocessing]
+    TILE_PRE --> BATCH[TensorRT batched inference]
+    INFER --> COPY[Output copy to CPU]
     BATCH --> COPY
-    COPY --> POST[Confidence filter, coordinate mapping, NMS]
+    COPY --> POST[Coordinate mapping, confidence filter, NMS]
     POST --> RESULT[PipelineResult]
     RESULT --> DISPLAY[ImGui display / panorama / fusion]
     RESULT --> RECORD[Optional display and raw-frame recording]
 ```
 
-DIRECT/OFF display paths can keep resize and color conversion on the GPU; SAHI and recording paths may transfer image data to CPU memory. Exact behavior depends on the selected input and mode.
+Each mode has a separate route through CUDA preprocessing. DIRECT processes the full frame once; SAHI generates tile coordinates and preprocesses each tile on the GPU before batched inference. SAHI currently requires a YOLOv5-compatible 640×640 FP32 engine, and its GUI mode selector is hidden. DIRECT/OFF display paths can keep resize and color conversion on the GPU; SAHI and recording paths may transfer image data to CPU memory. Exact behavior depends on the selected input and mode.
 
 ## Author-built components / 作者实现
 
