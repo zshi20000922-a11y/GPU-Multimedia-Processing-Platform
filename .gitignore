@@ -1,0 +1,31 @@
+# CMake and compiled output
+/build*/
+/cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.a
+*.so
+*.so.*
+
+# Local runtime state and recordings
+/.claude/
+/imgui.ini
+/logs/
+/recordings/
+*.avi
+*.mp4
+*.mkv
+
+# Machine-specific models and generated inference plans
+*.onnx
+*.engine
+*.plan
+*.pt
+
+# Python caches
+__pycache__/
+*.py[cod]
+.venv/
